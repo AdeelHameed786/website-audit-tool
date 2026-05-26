@@ -25,11 +25,12 @@ export default function AuditForm({ selectedPlan, setSelectedPlan }) {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/audit", {
+      const res = await fetch("/api/checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+
         body: JSON.stringify({
           plan: selectedPlan,
           url,
@@ -38,9 +39,9 @@ export default function AuditForm({ selectedPlan, setSelectedPlan }) {
         }),
       });
 
-      await res.json();
+      const data = await res.json();
 
-      alert("Redirecting to payment...");
+      window.location.href = data.checkoutUrl;
     } catch (err) {
       alert("Something went wrong");
     } finally {
