@@ -19,6 +19,8 @@ export async function createCheckout({
         type: "checkouts",
         attributes: {
           checkout_data: {
+            email,
+
             custom: {
               website_url: url,
               business_name: business,
