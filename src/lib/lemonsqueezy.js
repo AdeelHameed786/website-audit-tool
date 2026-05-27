@@ -11,54 +11,50 @@ export async function createCheckout({
   business,
   plan,
 }) {
-  const response = await fetch(
-    "https://api.lemonsqueezy.com/v1/checkouts",
-    {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        data: {
-          type: "checkouts",
-          attributes: {
-            checkout_data: {
-              email,
-              custom_data: {
-                website_url: url,
-                business_name: business,
-                selected_plan: plan,
-              },
-            },
-
-            checkout_options: {
-              embed: false,
-              media: true,
-              logo: true,
-            },
-
-            product_options: {
-              redirect_url: `${process.env.NEXT_PUBLIC_APP_URL}/success`,
+  const response = await fetch("https://api.lemonsqueezy.com/v1/checkouts", {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      data: {
+        type: "checkouts",
+        attributes: {
+          checkout_data: {
+            custom: {
+              website_url: url,
+              business_name: business,
+              selected_plan: plan,
             },
           },
 
-          relationships: {
-            store: {
-              data: {
-                type: "stores",
-                id: process.env.LEMON_SQUEEZY_STORE_ID,
-              },
-            },
+          checkout_options: {
+            embed: false,
+            media: true,
+            logo: true,
+          },
 
-            variant: {
-              data: {
-                type: "variants",
-                id: variantId,
-              },
+          product_options: {
+            redirect_url: `${process.env.NEXT_PUBLIC_APP_URL}/success`,
+          },
+        },
+
+        relationships: {
+          store: {
+            data: {
+              type: "stores",
+              id: process.env.LEMON_SQUEEZY_STORE_ID,
+            },
+          },
+
+          variant: {
+            data: {
+              type: "variants",
+              id: variantId,
             },
           },
         },
-      }),
-    }
-  );
+      },
+    }),
+  });
 
   return response.json();
 }
