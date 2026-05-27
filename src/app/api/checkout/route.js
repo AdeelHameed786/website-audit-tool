@@ -27,6 +27,19 @@ export async function POST(req) {
       plan,
     });
 
+    console.log("CHECKOUT RESPONSE:");
+    console.log(JSON.stringify(checkout, null, 2));
+
+    if (!checkout.data) {
+      return NextResponse.json(
+        {
+          error: "Lemon Squeezy checkout creation failed",
+          details: checkout,
+        },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json({
       checkoutUrl: checkout.data.attributes.url,
     });
