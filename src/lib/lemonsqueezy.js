@@ -35,7 +35,7 @@ export async function createCheckout({
           },
 
           product_options: {
-            redirect_url: `${process.env.NEXT_PUBLIC_APP_URL}/success`,
+            redirect_url: `${process.env.NEXT_PUBLIC_APP_URL}`,
           },
         },
 
